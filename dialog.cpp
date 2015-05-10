@@ -318,7 +318,8 @@ int ShowDialog()
     psh.ppsp = (LPCPROPSHEETPAGE) &psp;
     psh.pfnCallback = NULL;
     
-    if( PropertySheet(&psh) == -1 ) {
+    if( PropertySheet(&psh) == -1 )
+    {
         return GetLastError();
     }
     return 0;

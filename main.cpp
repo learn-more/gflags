@@ -29,7 +29,8 @@
 int wmain(int argc, const wchar_t *argv[])
 {
     UpdateValidFlags();
-    if( argc > 1 ) {
+    if( argc > 1 )
+    {
         ParseCommandline( argc, argv );
     }
     FreeConsole();

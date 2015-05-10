@@ -140,7 +140,8 @@ void UpdateValidFlags()
     g_ValidRegistryFlags = 0;
     g_ValidKernelFlags = 0;
     g_ValidImageFlags = 0;
-    for( size_t n = 0; n < g_FlagCount; ++n ) {
+    for( size_t n = 0; n < g_FlagCount; ++n )
+    {
         g_ValidRegistryFlags |= (g_Flags[n].wDest & DEST_REGISTRY) ? g_Flags[n].dwFlag : 0;
         g_ValidKernelFlags |= (g_Flags[n].wDest & DEST_KERNEL) ? g_Flags[n].dwFlag : 0;
         g_ValidImageFlags |= (g_Flags[n].wDest & DEST_IMAGE) ? g_Flags[n].dwFlag : 0;
