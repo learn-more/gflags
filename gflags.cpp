@@ -24,6 +24,7 @@
 
 #include <Windows.h>
 #include <Strsafe.h>
+#include <assert.h>
 #include "gflags.h"
 
 #define GLOBALFLAG_REGKEY           L"SYSTEM\\CurrentControlSet\\Control\\Session Manager"
@@ -267,6 +268,8 @@ BOOL ReadGlobalFlagsFromKernel( _Out_ DWORD* Flag )
         ULONG Length = 0;
         SYSTEM_FLAGS_INFORMATION sfi = {0};
         sfi.Flags = 0;
+        assert(sizeof(SYSTEM_FLAGS_INFORMATION) == 4);
+        assert(sizeof(sfi) == 4);
         if(SUCCEEDED(g_NtQuerySystemInformation(SystemFlagsInformation, &sfi, sizeof(sfi), &Length)) && Length == sizeof(sfi))
         {
             *Flag = sfi.Flags;
@@ -282,6 +285,10 @@ BOOL WriteGlobalFlagsToKernel( _In_ DWORD Flag )
     {
         SYSTEM_FLAGS_INFORMATION sfi = {0};
         sfi.Flags = Flag;
+        if (g_PoolTaggingEnabled)
+        {
+            sfi.Flags |= FLG_POOL_ENABLE_TAGGING;
+        }
         return SUCCEEDED(g_NtSetSystemInformation(SystemFlagsInformation, &sfi, sizeof(sfi)));
     }
     return FALSE;
